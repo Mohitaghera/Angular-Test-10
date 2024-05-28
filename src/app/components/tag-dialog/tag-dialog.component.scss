@@ -1,0 +1,31 @@
+.tag-dialog-container {
+  padding: 20px;
+}
+
+.tag-list {
+  margin-top: 10px;
+}
+
+.mat-chip {
+  margin-right: 5px;
+}
+
+.mat-icon {
+  cursor: pointer;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end; 
+  margin-top: 20px;
+}
+
+.mat-dialog-actions button:first-child {
+  margin-right: 10px; 
+}
+
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+

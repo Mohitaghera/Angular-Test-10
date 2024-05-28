@@ -1,0 +1,50 @@
+
+ <div class="gallery">
+  <div class="header">
+    <h1>Imagye Gallery</h1>
+    <div class="actions-header">
+      <select [(ngModel)]="sortOption" (change)="sortImages()">
+        <option value="name">Sort by Name</option>
+        <option value="date">Sort by Date</option>
+        <option value="size">Sort by Size</option>
+      </select>
+      <input
+        type="text"
+        placeholder="Search images..."
+        [(ngModel)]="searchText"
+        (input)="searchImages()"
+      />
+      <button class="reset-button" (click)="resetSearch()">Reset</button>
+      
+  
+    </div>
+  </div>
+  <div class="image-grid" *ngIf="!loadingImages; else loader">
+    <div class="gallery-item" *ngFor="let image of displayedImages" (click)="openImageView(image)">
+      <img [src]="image.url" [alt]="image.name">
+      <div class="overlay">
+        <div class="tags-left">
+          <button (click)="openTagDialog($event, image)" class="add-tag-btn">+</button>
+          <span *ngFor="let tag of image.tags.slice(0, 2)" class="tag">{{ tag }}</span>
+          <ng-container *ngIf="image.tags.length > 2">
+            <span class="tag">+{{ image.tags.length - 2 }}</span>
+          </ng-container>
+        </div>
+        <div class="actions">
+          <button class="delete-btn" (click)="deleteImage($event,image)"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="upload-item" (click)="openUploadDialog()">
+      <label for="file-input" class="upload-label">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <span>Upload Image</span>
+      </label>
+    </div>
+  </div>
+  <ng-template #loader>
+    <div class="loader" *ngIf="loadingImages">
+      <div class="spinner"></div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,10 @@
+<div class="image-view">
+  <i class="close-icon fas fa-times" (click)="closeDialog()"></i>
+  <img [src]="data.image.url" [alt]="data.image.name">
+  <div class="details">
+    <h2>Image Name: {{ data.image.name }}</h2>
+    <p>Uploaded Date: {{ data.image.date }}</p>
+    <p>Size: {{ data.image.size | formatSize}} KB</p>
+    <p>Tags: {{ data.image.tags }}</p>
+  </div>
+</div>
