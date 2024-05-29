@@ -1,0 +1,52 @@
+<div class="uplod-dialog-container">
+  <h3 mat-dialog-title>Upload Image</h3>
+  <i class="close-icon fas fa-times" (click)="close()"></i>
+  <div mat-dialog-content>
+    <form
+      #uploadForm="ngForm"
+      (ngSubmit)="onUpload()"
+      (ngModelChange)="updateFormValidity(uploadForm)"
+    >
+      <mat-form-field>
+        <mat-label>Image Name</mat-label>
+        <input matInput [(ngModel)]="imageName" name="imageName" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Tags</mat-label>
+        <input matInput [(ngModel)]="tags" name="tags" required />
+      </mat-form-field>
+
+      <ngx-dropzone
+        (change)="onFileSelected($event)"
+        [multiple]="false"
+        class="dropzone"
+        required
+        (dragover)="onDragOver($event)"
+        (dragenter)="onDragEnter($event)"
+        (dragleave)="onDragLeave($event)"
+      >
+        <p *ngIf="selectedFile">{{ selectedFile.name }}</p>
+        <p *ngIf="!selectedFile">Drag and drop your image here, or</p>
+        <button
+          mat-button
+          *ngIf="!selectedFile"
+          class="select-image"
+          #selectImageButton
+        >
+          Select Image
+        </button>
+      </ngx-dropzone>
+
+      <div mat-dialog-actions class="mat-dialog-actions">
+        <button class="cancel-btn" mat-button (click)="close()">Cancel</button>
+        <button
+          class="upload-btn"
+          mat-button
+          [disabled]="!selectedFile || !uploadForm.valid"
+        >
+          Upload
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

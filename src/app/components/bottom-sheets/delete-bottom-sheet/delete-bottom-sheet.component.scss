@@ -1,0 +1,63 @@
+.delete-dialog {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-icon {
+  font-size: 20px;
+  color: blue;
+}
+
+.close-icon {
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+div[mat-dialog-content] {
+  p {
+    font-size: 16px;
+    margin: 20px 0;
+  }
+}
+
+div[mat-dialog-actions] {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+
+  button {
+    min-width: 80px;
+    margin: 0 5px;
+  }
+}
+
+.mat-dialog-actions button {
+  background-color: #495057;
+  color: white;
+  transition: all 0.2s;
+}
+
+.mat-dialog-actions button:hover {
+  background-color: #343a40;
+}
+
+.mat-dialog-actions button:first-child {
+  margin-right: 10px;
+}

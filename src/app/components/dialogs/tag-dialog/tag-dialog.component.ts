@@ -7,6 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
+import { FirebaseModule } from '../../../firebase.module';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+
 
 @Component({
   selector: 'app-tag-dialog',
@@ -23,6 +27,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    AngularFirestoreModule
   ],
 })
 export class TagDialogComponent {
@@ -31,7 +36,8 @@ export class TagDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<TagDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    // private fireStore: AngularFirestore
   ) {
     this.tags = data.image.tags ? [...data.image.tags] : [];
   }
@@ -44,6 +50,7 @@ export class TagDialogComponent {
     const value = this.tagCtrl.value?.trim();
     if (value && !this.tags.includes(value)) {
       this.tags.push(value);
+      console.log('add', this.tags);
     }
     this.tagCtrl.setValue('');
   }
@@ -52,10 +59,42 @@ export class TagDialogComponent {
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags.splice(index, 1);
+      console.log('remove', this.tags);
     }
   }
 
   save(): void {
-    this.dialogRef.close(this.tags);
+
+    }
+
+  // save(): void {
+  //   // Query Firebase to find the document ID based on certain criteria
+  //   this.fireStore
+  //     .collection('images', (ref) =>
+  //       ref.where('name', '==', this.data.image.name).limit(1)
+  //     )
+  //     .snapshotChanges()
+  //     .subscribe((images) => {
+  //       if (images.length > 0) {
+  //         const imageId = images[0].payload.doc.id;
+  //         // Update the tags for the image in Firebase
+  //         this.fireStore
+  //           .doc(`images/${imageId}`)
+  //           .update({ tags: this.tags })
+  //           .then(() => {
+  //             console.log('Tags updated successfully');
+  //             this.dialogRef.close(this.tags);
+  //           })
+  //           .catch((error) => {
+  //             console.error('Error updating tags: ', error);
+  //           });
+  //       } else {
+  //         console.error('Image not found.');
+  //       }
+  //     });
+  // }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

@@ -2,9 +2,9 @@
   position: relative;
   text-align: center;
   padding: 20px;
-  width: calc(100% - 40px); 
+  width: calc(100% - 40px);
   margin: 0 auto;
-  max-width: 400px; 
+  max-width: 400px;
 
   .dialog-header {
     display: flex;
@@ -29,7 +29,7 @@
 
   h2 {
     font-size: 24px;
-    margin-top: 40px; 
+    margin-top: 40px;
     margin-bottom: 20px;
   }
 
@@ -50,4 +50,18 @@
       margin: 0 5px;
     }
   }
+}
+
+.mat-dialog-actions button {
+  background-color: #495057;
+  color: white;
+  transition: all 0.2s;
+}
+
+.mat-dialog-actions button:hover {
+  background-color: #343a40;
+}
+
+.mat-dialog-actions button:first-child {
+  margin-right: 10px;
 }

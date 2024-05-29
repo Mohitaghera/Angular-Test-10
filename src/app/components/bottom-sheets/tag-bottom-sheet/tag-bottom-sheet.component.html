@@ -1,8 +1,8 @@
 <div class="tag-dialog-container">
-  <button mat-icon-button class="close-button" mat-dialog-close aria-label="Close">
-    <mat-icon>close</mat-icon>
-  </button>
-  <h1 mat-dialog-title>Tagging</h1>
+  <i class="close-icon fas fa-times" (click)="close()"></i>
+  <h3 mat-dialog-title>Tagging</h3>
+  <p>Image Name: {{data.image.name}}</p>
+
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>New Tag</mat-label>
@@ -14,7 +14,7 @@
       />
     </mat-form-field>
     <div class="tag-list">
-      <mat-chip-list>
+      <mat-chip-list class="mat-chip-list">
         <mat-chip
           *ngFor="let tag of tags"
           [selectable]="true"
@@ -27,8 +27,8 @@
       </mat-chip-list>
     </div>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancel</button>
+  <div mat-dialog-actions class="mat-dialog-actions">
+    <button mat-button (click)="close()">Cancel</button>
     <button mat-button (click)="save()">Update</button>
   </div>
 </div>

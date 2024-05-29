@@ -1,13 +1,14 @@
 
  <div class="gallery">
   <div class="header">
-    <h1>Imagye Gallery</h1>
+    <h1>Image Gallery</h1>
     <div class="actions-header">
       <select [(ngModel)]="sortOption" (change)="sortImages()">
         <option value="name">Sort by Name</option>
         <option value="date">Sort by Date</option>
         <option value="size">Sort by Size</option>
       </select>
+      <div class="search-box">
       <input
         type="text"
         placeholder="Search images..."
@@ -15,7 +16,7 @@
         (input)="searchImages()"
       />
       <button class="reset-button" (click)="resetSearch()">Reset</button>
-      
+    </div>
   
     </div>
   </div>
@@ -24,7 +25,7 @@
       <img [src]="image.url" [alt]="image.name">
       <div class="overlay">
         <div class="tags-left">
-          <button (click)="openTagDialog($event, image)" class="add-tag-btn">+</button>
+          <button (click)="openTag($event, image)" class="add-tag-btn">+</button>
           <span *ngFor="let tag of image.tags.slice(0, 2)" class="tag">{{ tag }}</span>
           <ng-container *ngIf="image.tags.length > 2">
             <span class="tag">+{{ image.tags.length - 2 }}</span>

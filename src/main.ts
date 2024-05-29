@@ -9,6 +9,8 @@ import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideFirestore } from '@angular/fire/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 
 const appConfig = {
@@ -19,6 +21,8 @@ const appConfig = {
     provideAnimations(),
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideFirestore(() => getFirestore()),
+
   ],
 }
 
