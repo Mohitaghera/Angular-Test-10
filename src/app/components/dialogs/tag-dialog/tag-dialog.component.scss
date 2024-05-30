@@ -45,12 +45,13 @@
   margin-top: 20px !important;
 }
 
-.mat-dialog-actions button {
+.mat-dialog-actions button,.add-btn {
   background-color: #495057;
-  color: white;
+  color: white !important;
   transition: all 0.2s;
 }
-.mat-dialog-actions button:hover{
+.mat-dialog-actions button:hover,
+.add-btn:hover{
   background-color: #343a40;
 }
 
@@ -58,3 +59,11 @@
   margin-right: 10px;
 }
 
+::ng-deep .mat-mdc-form-field-subscript-wrapper{
+  display: none !important;
+}
+
+.add-btn{
+  margin: 14px 0 !important;
+  display: block !important;
+}

@@ -88,6 +88,16 @@
   margin-right: 4px;
   margin-bottom: 4px;
 }
+.mat-tooltip.custom-tooltip {
+  background-color: white !important;
+  color: gray !important;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+
 
 .add-tag-btn {
   background-color: #d9d9d9;
@@ -197,17 +207,6 @@
   }
 }
 
-// /* Adjustments for smaller screens */
-// @media screen and (max-width: 768px) {
-//   .image-grid {
-//     margin-left: 0;
-//     justify-content: center;
-//   }
-//   .gallery-item {
-//     width: calc(50% - 20px);
-//   }
-// }
-
 @media screen and (max-width: 600px) {
   .header {
     padding: 10px;
@@ -230,16 +229,10 @@
       margin-left: auto;
     }
   }
+  .actions{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+  
 }
-
-// /* Adjustments for even smaller screens */
-// @media screen and (max-width: 480px) {
-//   .image-grid {
-//     flex-direction: column;
-//     align-items: center;
-//   }
-//   .gallery-item {
-//     width: calc(100% - 20px);
-//     margin-right: 0;
-//   }
-// }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../../services/image.service';
 import { Image } from '../../models/image/image.model';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { UploadDialogComponent } from '../dialogs/upload-dialog/upload-dialog.component';
 import { DeleteDialogComponent } from '../dialogs/delete-dialog/delete-dialog.component';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
@@ -10,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseModule } from '../../firebase.module';
 import { ImageViewComponent } from '../image-view/image-view.component';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TagDialogComponent } from '../dialogs/tag-dialog/tag-dialog.component';
 import {
   MatBottomSheet,
@@ -25,7 +27,7 @@ import { UploadDialogBottomSheetComponent } from '../bottom-sheets/upload-bottom
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, FirebaseModule, MatBottomSheetModule],
+  imports: [CommonModule, FormsModule, FirebaseModule, MatBottomSheetModule,MatTooltipModule,MatDialogModule]
 })
 export class GalleryComponent implements OnInit {
   images: Image[] = [];
@@ -51,7 +53,6 @@ export class GalleryComponent implements OnInit {
       this.images = Object.values(images);
       this.displayedImages = Object.values(images);
       this.loadingImages = false;
-      console.log(new Date(this.displayedImages[0].date).getTime);
     });
   }
   async getDocumentId(image: Image): Promise<string | undefined> {
@@ -161,27 +162,6 @@ export class GalleryComponent implements OnInit {
       });
     }
   }
-
-  // openUploadDialog(): void {
-  //   const dialogRef = this.dialog.open(UploadDialogComponent, {
-  //     width: '400px',
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result === 'uploaded') {
-  //       this.loadingImages = true;
-  //       this.imageService.getImages().subscribe((response: any[]) => {
-  //         if (response && typeof response === 'object') {
-  //           const imagesArray = Object.values(response);
-  //           this.images = imagesArray;
-  //           this.displayedImages = imagesArray;
-  //         }
-  //         this.loadingImages = false;
-  //       });
-  //     }
-  //   });
-  // }
-
   openUploadDialog(): void {
     const uploadAction = async () => {
       this.loadingImages = true;
@@ -247,7 +227,9 @@ export class GalleryComponent implements OnInit {
         data: { image },
       });
 
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+        
+      });
     }
   }
 }

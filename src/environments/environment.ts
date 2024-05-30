@@ -1,4 +1,5 @@
-
+import { initializeApp } from 'firebase/app';
+import '@firebase/firestore';
 
 export const environment = {
   firebaseConfig: {
@@ -12,4 +13,4 @@ export const environment = {
   },
 };
 
-
+initializeApp(environment.firebaseConfig);

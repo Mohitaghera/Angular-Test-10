@@ -26,15 +26,7 @@
         (dragleave)="onDragLeave($event)"
       >
         <p *ngIf="selectedFile">{{ selectedFile.name }}</p>
-        <p *ngIf="!selectedFile">Drag and drop your image here, or</p>
-        <button
-          mat-button
-          *ngIf="!selectedFile"
-          class="select-image"
-          #selectImageButton
-        >
-          Select Image
-        </button>
+        <p *ngIf="!selectedFile"><span class="link">Choose a file</span> or drop it here.</p>
       </ngx-dropzone>
 
       <div mat-dialog-actions class="mat-dialog-actions">
