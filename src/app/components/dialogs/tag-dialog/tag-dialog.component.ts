@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { FirebaseModule } from '../../../firebase.module';
 import { Image } from '../../../models/image/image.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-tag-dialog',
@@ -26,19 +28,20 @@ import { Image } from '../../../models/image/image.model';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    FirebaseModule
-  ]
+    FirebaseModule,
+  ],
 })
 export class TagDialogComponent {
   tagCtrl = new FormControl('');
   tags: string[] = [];
   loadingImages: boolean = false;
 
-
   constructor(
     public db: AngularFireDatabase,
     public dialogRef: MatDialogRef<TagDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar: MatSnackBar 
+
   ) {
     this.tags = data.image.tags ? [...data.image.tags] : [];
   }
@@ -56,29 +59,36 @@ export class TagDialogComponent {
   }
 
   remove(tag: string): void {
-    const index = this.tags.indexOf(tag);
-    if (index >= 0) {
-      this.tags.splice(index, 1);
-    } 
+    if (this.tags.length > 1) {
+      const index = this.tags.indexOf(tag);
+      if (index >= 0) {
+        this.tags.splice(index, 1);
+      }
+    }else {
+      this.snackBar.open('At least one tag must remain', 'Close', {
+        duration: 2000 
+      });
+    }
   }
 
-  async save(): Promise<void>{    
-    const image = this.data.image as Image; 
-    const id =await  this.getDocumentId(image)    
+  async save(): Promise<void> {
+    const image = this.data.image as Image;
+    const id = await this.getDocumentId(image);
     if (id) {
-      this.db.object(`images/${id}`).update({ tags: this.tags })
+      this.db
+        .object(`images/${id}`)
+        .update({ tags: this.tags })
         .then(() => {
           this.dialogRef.close(this.tags);
           this.data.image.tags = this.tags;
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error updating image: ', error);
         });
     } else {
       console.error('Document ID not found');
     }
   }
-
 
   closeDialog(): void {
     this.dialogRef.close();

@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FirebaseModule } from '../../../firebase.module';
 import { Image } from '../../../models/image/image.model';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tag-dialog-bottom-sheet',
@@ -41,7 +42,9 @@ export class TagDialogBottomSheetComponent {
   constructor(
     public db: AngularFireDatabase,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-    private bottomSheetRef: MatBottomSheetRef<TagDialogBottomSheetComponent>
+    private bottomSheetRef: MatBottomSheetRef<TagDialogBottomSheetComponent>,
+    private snackBar: MatSnackBar 
+
   ) {
     this.tags = data.image.tags ? [...data.image.tags] : [];
   }
@@ -75,9 +78,15 @@ export class TagDialogBottomSheetComponent {
     this.tagCtrl.setValue('');
   }
   remove(tag: string): void {
-    const index = this.tags.indexOf(tag);
-    if (index >= 0) {
-      this.tags.splice(index, 1);
+    if (this.tags.length > 1) {
+      const index = this.tags.indexOf(tag);
+      if (index >= 0) {
+        this.tags.splice(index, 1);
+      }
+    }else {
+      this.snackBar.open('At least one tag must remain', 'Close', {
+        duration: 2000 
+      });
     }
   }
 

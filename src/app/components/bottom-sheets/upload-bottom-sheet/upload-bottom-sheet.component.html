@@ -30,9 +30,10 @@
       </ngx-dropzone>
 
       <div mat-dialog-actions class="mat-dialog-actions">
-        <button class="cancel-btn" mat-button (click)="close()">Cancel</button>
+        <button class="cancel-btn" color="warn" mat-button (click)="close()">Cancel</button>
         <button
           class="upload-btn"
+          color="primary"
           mat-button
           [disabled]="!selectedFile || !uploadForm.valid"
         >

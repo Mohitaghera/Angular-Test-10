@@ -3,6 +3,7 @@ import { ImageService } from '../../services/image.service';
 import { Image } from '../../models/image/image.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { UploadDialogComponent } from '../dialogs/upload-dialog/upload-dialog.component';
 import { DeleteDialogComponent } from '../dialogs/delete-dialog/delete-dialog.component';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
@@ -13,6 +14,8 @@ import { FirebaseModule } from '../../firebase.module';
 import { ImageViewComponent } from '../image-view/image-view.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TagDialogComponent } from '../dialogs/tag-dialog/tag-dialog.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 import {
   MatBottomSheet,
   MatBottomSheetModule,
@@ -27,7 +30,17 @@ import { UploadDialogBottomSheetComponent } from '../bottom-sheets/upload-bottom
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, FirebaseModule, MatBottomSheetModule,MatTooltipModule,MatDialogModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    FirebaseModule,
+    MatBottomSheetModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule
+  ],
 })
 export class GalleryComponent implements OnInit {
   images: Image[] = [];
@@ -36,6 +49,8 @@ export class GalleryComponent implements OnInit {
   sortOption: string = 'date';
   loadingImages: boolean = false;
   items: Observable<any[]>;
+  isSortMenuOpen: boolean = false;
+
 
   constructor(
     private imageService: ImageService,
@@ -53,6 +68,7 @@ export class GalleryComponent implements OnInit {
       this.images = Object.values(images);
       this.displayedImages = Object.values(images);
       this.loadingImages = false;
+      this.sortImages();
     });
   }
   async getDocumentId(image: Image): Promise<string | undefined> {
@@ -92,11 +108,13 @@ export class GalleryComponent implements OnInit {
         tag.includes(searchTextLowerCase)
       );
     });
+    this.sortImages();
   }
 
   resetSearch(): void {
     this.searchText = '';
     this.searchImages();
+    this.sortImages();
   }
 
   sortImages(): void {
@@ -172,6 +190,7 @@ export class GalleryComponent implements OnInit {
           this.displayedImages = imagesArray;
         }
         this.loadingImages = false;
+        this.sortImages();
       });
     };
 
@@ -227,9 +246,7 @@ export class GalleryComponent implements OnInit {
         data: { image },
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
-        
-      });
+      dialogRef.afterClosed().subscribe((result) => {});
     }
   }
 }

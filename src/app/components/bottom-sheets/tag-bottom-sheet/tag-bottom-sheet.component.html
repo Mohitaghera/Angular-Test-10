@@ -1,6 +1,7 @@
+
 <div class="tag-dialog-container">
   <i class="close-icon fas fa-times" (click)="close()"></i>
-  <h3 mat-dialog-title>Tagging</h3>
+  <h3 mat-dialog-title class="title">Add Tag</h3>
   <p>Image Name: {{data.image.name}}</p>
 
   <div mat-dialog-content>
@@ -13,7 +14,7 @@
         (keyup.enter)="addTag()"
       />
     </mat-form-field>
-    <button mat-button class="add-btn" (click)="addTag()">Add</button>
+    <button mat-button color="primary" class="add-btn" (click)="addTag()">Add</button>
     <div class="tag-list">
       <mat-chip-list class="mat-chip-list">
         <mat-chip
@@ -29,7 +30,7 @@
     </div>
   </div>
   <div mat-dialog-actions class="mat-dialog-actions">
-    <button mat-button (click)="close()">Cancel</button>
-    <button mat-button (click)="save()">Update</button>
+    <button mat-button  color="warn" (click)="close()">Cancel</button>
+    <button mat-button  color="primary" (click)="save()">Update</button>
   </div>
 </div>

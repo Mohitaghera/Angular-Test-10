@@ -3,11 +3,14 @@
   <div class="header">
     <h1>Image Gallery</h1>
     <div class="actions-header">
-      <select [(ngModel)]="sortOption" (change)="sortImages()">
-        <option value="name">Sort by Name</option>
-        <option value="date">Sort by Date</option>
-        <option value="size">Sort by Size</option>
-      </select>
+      <button matTooltip="Sort" class="sort-btn" matTooltipClass="custom-tooltip" mat-icon-button [matMenuTriggerFor]="sortMenu">
+        <mat-icon>sort</mat-icon>
+      </button>
+      <mat-menu #sortMenu="matMenu" [class.menu-open]="isSortMenuOpen">
+        <button mat-menu-item (click)="sortOption = 'name'; sortImages()">Sort by Name</button>
+        <button mat-menu-item (click)="sortOption = 'date'; sortImages()">Sort by Date</button>
+        <button mat-menu-item (click)="sortOption = 'size'; sortImages()">Sort by Size</button>
+      </mat-menu>
       <div class="search-box">
       <input
         type="text"
@@ -15,28 +18,36 @@
         [(ngModel)]="searchText"
         (input)="searchImages()"
       />
-      <button class="reset-button" (click)="resetSearch()">Reset</button>
+      <button class="reset-button" mat-button color="warn" (click)="resetSearch()">Reset</button>
     </div>
+    <button class="upload-button" mat-button color="primary" (click)="openUploadDialog()">Upload Image</button>
+
   
     </div>
   </div>
   <div class="image-grid" *ngIf="!loadingImages; else loader">
+    <ng-container *ngIf="displayedImages.length > 0; else noRecordsFound">
     <div class="gallery-item" *ngFor="let image of displayedImages" (click)="openImageView(image)">
       <img [src]="image.url" [alt]="image.name">
       <div class="overlay">
         <div class="tags-left">
-          <button mat-icon-button matTooltip="Add Tag" matTooltipClass="custom-tooltip" (click)="openTag($event, image)" class="add-tag-btn">+</button>
+          <button matTooltip="Add Tag" matTooltipClass="custom-tooltip" (click)="openTag($event, image)" class="add-tag-btn">+</button>
           <span *ngFor="let tag of image.tags.slice(0, 2)" class="tag">{{ tag }}</span>
           <ng-container *ngIf="image.tags.length > 2">
             <span class="tag">+{{ image.tags.length - 2 }}</span>
           </ng-container>
         </div>
         <div class="actions">
-          <button  mat-icon-button matTooltip="Delete" matTooltipClass="custom-tooltip" class="delete-btn" (click)="deleteImage($event,image)"><i class="fas fa-trash-alt"></i></button>
+          <button   matTooltip="Delete" matTooltipClass="custom-tooltip" class="delete-btn" (click)="deleteImage($event,image)"><i class="fas fa-trash-alt"></i></button>
         </div>
       </div>
     </div>
-    <div class="upload-item" (click)="openUploadDialog()">
+  </ng-container>
+  <ng-template #noRecordsFound>
+    <div class="no-records-found">
+      {{ (searchText || displayedImages.length > 0) ? 'No records found' : 'No images available' }}    </div>
+  </ng-template>
+    <div class="upload-item" *ngIf="searchText === '' && displayedImages.length !== 0" (click)="openUploadDialog()">
       <label for="file-input" class="upload-label">
         <i class="fas fa-cloud-upload-alt"></i>
         <span>Upload Image</span>

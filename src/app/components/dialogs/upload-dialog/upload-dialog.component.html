@@ -20,6 +20,7 @@
       (dragover)="onDragOver($event)"
       (dragenter)="onDragEnter($event)"
       (dragleave)="onDragLeave($event)"
+      accept="image/*"
   
      >
       <p *ngIf="selectedFile">{{ selectedFile.name }}</p>
@@ -27,8 +28,8 @@
     </ngx-dropzone>
 
     <div mat-dialog-actions class="mat-dialog-actions">
-      <button class="cancel-btn" mat-button (click)="closeDialog()">Cancel</button>
-      <button type="submit" class="upload-btn" mat-button [disabled]="!selectedFile || !uploadForm.valid ">Upload</button>
+      <button class="cancel-btn" color="warn" mat-button (click)="closeDialog()">Cancel</button>
+      <button type="submit" color="primary" class="upload-btn" mat-button [disabled]="!selectedFile || !uploadForm.valid ">Upload</button>
     </div>
 
     </form>
